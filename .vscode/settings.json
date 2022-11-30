@@ -1,0 +1,6 @@
+{
+    "python.analysis.extraPaths": [
+        "./venv/Lib/site-packages/confluent_kafka/schema_registry",
+        "./venv/Lib/site-packages"
+    ]
+}

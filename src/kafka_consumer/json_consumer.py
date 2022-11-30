@@ -34,15 +34,20 @@ def consumer_using_sample_file(topic,file_path):
                 continue
 
             record: Generic = json_deserializer(msg.value(), SerializationContext(msg.topic(), MessageField.VALUE))
-
-            # mongodb.insert(collection_name="car",record=car.record)
+            
+           # mongodb.insert(collection_name=["car"],record=record)
 
             if record is not None:
                 records.append(record.to_dict())
-                if x % 5000 == 0:
+                if x % 5 == 0:
+                    print('consumed 5 records')
                     mongodb.insert_many(collection_name="car", records=records)
                     records = []
             x = x + 1
+            print('x consumer record count',x)
+            if x > 5:
+                consumer.close()
+                print("exceeds 5 count")
         except KeyboardInterrupt:
             break
 
